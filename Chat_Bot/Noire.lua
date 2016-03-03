@@ -4,6 +4,7 @@ local component = require("component")
 local event = require("event")
 local filesystem = require("filesystem")
 local unicode = require("unicode")
+local computer = require("computer")
 local rs = component.redstone
 local cb = component.command_block
 local x, z, r
@@ -25,7 +26,6 @@ end
 
 local function loadAllowedUsersList()
   userlist = {}
-  print(pcall(io.open, allowedUsersListPath, "r"))
   local file = io.open(allowedUsersListPath, "r")
   for line in file:lines() do
     table.insert(userList, line)
@@ -92,7 +92,7 @@ while true do
     cb.setCommand(string.format("/tellraw @a [\"\",{\"text\":\"Объявление:\",\"color\":\"aqua\"},{\"text\":\"%s\",\"color\":\"blue\"}]",unicode.sub(m, 7)))
     cb.executeCommand()
 
-  elseif string.find(ms,"нойра ты теперь") and check then
+  elseif string.find(ms,"пал ты теперь") and check then
     component.chat_box.setName(tostring(unicode.sub(m, 17)))
     component.chat_box.say("Слушаюсь.")
 
@@ -109,11 +109,11 @@ while true do
     os.sleep(5)
     component.chat_box.say("Почитай на экране на спауне во вкладке 'Приват'.")
 
-  --if string.find(unicode.lower(m), "нойра") and string.find(unicode.lower(m), "помолимся") then--
+  --if string.find(unicode.lower(m), "пал") and string.find(unicode.lower(m), "помолимся") then--
   --component.chat_box.say("Помолимся! Аллаху акбар! Смерть кафирам неверным!")--
   --end--
 
-  elseif string.find(ms, "reboot list") and p == "MaliciousPancake" then
+  elseif string.find(ms, "reboot list") and p == "PaladinCVM" then
     loadAllowedUsersList()
     loadMatList()
     chb("Done.")  
@@ -141,6 +141,9 @@ while true do
     rs.setOutput(sides.north, 15)
     os.sleep(9)
     rs.setOutput(sides.north, 0)
+
+  elseif string.find(ms, "noire off") and check then
+    computer.shutdown(true)
 
   elseif string.find(ms, "echo") and check then
     chb(unicode.sub(m, 6))
